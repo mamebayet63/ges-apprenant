@@ -52,8 +52,8 @@
                                 <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
                             </div>
                             <div class="hidden md:block text-left">
-                                <p class="text-sm font-medium">Fatima Niang</p>
-                                <p class="text-xs text-gray-500">Responsable Pédagogique</p>
+                                <p class="text-sm font-medium"><?= $_SESSION["user"]["prenom"] ?> <?= $_SESSION["user"]["nom"] ?></p>
+                                <p class="text-xs text-gray-500">Admin</p>
                             </div>
                             
                             <!-- Menu déroulant -->
@@ -67,7 +67,7 @@
                                     <span>Paramètres</span>
                                 </a>
                                 <div class="border-t my-2"></div>
-                                <a href="#" class="flex items-center space-x-2 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg">
+                                <a href="<?= WEBROOT?>?controller=security&page=logout" class="flex items-center space-x-2 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg">
                                     <heroicon-outline-arrow-left-on-rectangle class="w-5 h-5" />
                                     <span>Déconnexion</span>
                                 </a>

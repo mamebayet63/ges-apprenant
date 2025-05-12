@@ -19,6 +19,19 @@ $connect = function (): PDO {
     }
 };
 
+$guard = function(string $controller) {
+    if (!isset($_SESSION['user']) && $controller !== 'security') {
+        header("Location: " . WEBROOT . "?controller=security&page=login");
+        exit;
+    }
+
+    // Si tu veux aussi empêcher les utilisateurs connectés d'accéder à la page de login :
+    // if (isset($_SESSION['user']) && ($controller === 'security' || $controller === '')) {
+    //     header("Location: " . WEBROOT . "?controller=promo");
+    // !    exit;
+    // }
+};
+
 
 // Fonction anonyme pour récupérer les promotions
 $getPromotions = function () {

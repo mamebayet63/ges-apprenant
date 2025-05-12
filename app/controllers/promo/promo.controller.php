@@ -13,7 +13,13 @@ function handleAttachePage() {
     $promos = $getPromotions();
     // var_dump($promos);
     // die();
-    require_once ROOT_PATH . "/app/views/promo/promo.html.php";
+    if (isset($_GET["affiche"]) && $_GET["affiche"] == "liste") {
+        require_once ROOT_PATH . "/app/views/promo/promoTable.html.php";
+
+    } else {
+            require_once ROOT_PATH . "/app/views/promo/promo.html.php";
+    }
+    
 }
 
 

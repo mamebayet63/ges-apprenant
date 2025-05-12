@@ -14,7 +14,7 @@
                   
                     <!-- View Toggles -->
                     <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
-                      <a href="">
+                      <a href="<?= WEBROOT?>?controller=promo">
                             <button 
                             id="cardViewBtn" 
                             class="p-2 rounded-lg bg-white text-red-600 transition-colors duration-200  "

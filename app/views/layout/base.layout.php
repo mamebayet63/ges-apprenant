@@ -6,6 +6,7 @@
         <title>Dashboard RP - École 221</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
         <!-- Icônes Heroicons -->
         <script src="https://unpkg.com/@heroicons/v2.0.18/24/outline/index.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>

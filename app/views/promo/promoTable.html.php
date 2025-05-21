@@ -1,3 +1,19 @@
+       <?php if (!empty($_SESSION['success_message'])): ?>
+    <div id="success-alert" class="fixed top-4 right-4 bg-emerald-500 text-white px-6 py-3 rounded shadow-lg z-50">
+        <?= htmlspecialchars($_SESSION['success_message']) ?>
+    </div>
+    <script>
+      // Cacher le message après 5 secondes
+      setTimeout(() => {
+        const alert = document.getElementById('success-alert');
+        if (alert) {
+          alert.style.display = 'none';
+        }
+      }, 5000);
+    </script>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+
 <div class="gap-6 bg-white/80 backdrop-blur-sm border-b border-gray-100 rounded-xl p-6">
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <!-- Search Bar -->
@@ -52,15 +68,7 @@
                         <!-- Photo -->
                         <td class="px-2 py-2 bg-white">
                             <div class="w-12 h-12 rounded-md overflow-hidden">
-                                <?php if ($p['cover_photo']) : ?>
-                                    <img src="data:image/jpeg;base64,<?= base64_encode($p['cover_photo']) ?>" 
-                                        alt="<?= htmlspecialchars($p['nom']) ?>" 
-                                        class="w-full h-full object-cover transition-transform group-hover:scale-110">
-                                <?php else : ?>
-                                    <div class="w-full h-full bg-red-50 flex items-center justify-center">
-                                        <i class="ri-team-line text-xl text-red-200"></i>
-                                    </div>
-                                <?php endif; ?>
+                    <?php afficherPhoto($p['cover_photo'], $p['nom']); ?>
                             </div>
                         </td>
 
@@ -97,8 +105,8 @@
                         <!-- Statut -->
                         <td class="px-2 py-4">
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm
-                                <?= $p['statut'] === 'Terminée' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700' ?>">
-                                <i class="ri-<?= $p['statut'] === 'Terminée' ? 'check' : 'close' ?>-circle-line mr-2"></i>
+                                <?= $p['statut'] === 'Actif' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700' ?>">
+                                <i class="ri-<?= $p['statut'] === 'Actif' ? 'check' : 'close' ?>-circle-line mr-2"></i>
                                 <?= htmlspecialchars($p['statut']) ?>
                             </span>
                         </td>
@@ -106,12 +114,13 @@
                         <!-- Actions -->
                         <td class="px-2 py-4 bg-white">
                             <div class="flex items-center gap-3">
-                                <button 
-                                    class="delete-btn p-1.5 rounded-lg hover:bg-gray-100 transition-colors" 
-                                    title="Supprimer" 
-                                    data-id="<?= $p['id'] ?>">
-                                    <i class="ri-delete-bin-line text-lg text-gray-600 hover:text-red-600"></i>
-                                </button>
+                                <a 
+                                    href="javascript:void(0);" 
+                                    class="inline-flex items-center px-2 py-0.5 rounded-full shadow-sm transition-all <?= $p['statut'] === 'Inactif' ? 'text-emerald-600 bg-white ring-1 ring-emerald-200 hover:bg-emerald-50 hover:ring-emerald-300' : 'text-red-600 bg-white ring-1 ring-red-200 hover:bg-red-50 hover:ring-red-300' ?>"
+                                    onclick="openConfirmationModal(<?= $p['id'] ?>, '<?= $p['statut'] ?>')"
+                                    >
+                                    <i class="ri-shut-down-line text-sm"></i>
+                                </a>
                                 <!-- Ajoute ici d'autres actions si besoin -->
                             </div>
                         </td>
@@ -120,4 +129,89 @@
             </tbody>
         </table>
     </div>
+    <nav class="pagination mt-4">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?controller=promo&page=promo&affiche=liste&pagination=<?= $i ?>" class="px-3 py-1 border <?= $i == $pagination ? 'bg-blue-500 text-white' : 'bg-white text-gray-700' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+    </nav>
 </div>
+
+<!-- Modal de confirmation -->
+<input type="checkbox" id="confirm-modal" class="modal-toggle" />
+<div class="modal backdrop-blur-sm">
+  <div class="modal-box p-8 max-w-md relative rounded-xl shadow-2xl border border-red-100">
+    <!-- Icone d'avertissement -->
+    <div class="flex justify-center mb-4">
+      <div class="p-3 bg-red-50 rounded-full">
+        <i class="ri-alert-line text-3xl text-red-600"></i>
+      </div>
+    </div>
+
+    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-2">Confirmation requise</h3>
+    
+    <p class="text-gray-600 text-center mb-6 leading-relaxed">
+      Êtes-vous sûr de vouloir modifier le statut de cette promotion ?<br>
+      <span class="text-red-500 text-sm">Cette action est irréversible.</span>
+    </p>
+
+    <input type="hidden" id="promo-id" />
+    <input type="hidden" id="statut" />
+
+    <div class="modal-action flex justify-center gap-4 mt-6">
+      <label for="confirm-modal" 
+             class="btn px-8 py-2.5 border border-gray-300 bg-white text-gray-700 
+                    hover:bg-gray-50 hover:border-gray-400 hover:text-gray-800
+                    transition-all duration-200 focus:ring-2 focus:ring-red-300">
+        <i class="ri-close-line mr-2"></i>
+        Annuler
+      </label>
+      <button id="confirm-button" 
+              class="btn px-8 py-2.5 bg-red-600 text-white 
+                     hover:bg-red-700 hover:shadow-lg 
+                     transition-all duration-200 
+                     focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
+        <i class="ri-check-line mr-2"></i>
+        Confirmer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  function openConfirmationModal(promoId , statut) {
+    // Injecter l’ID dans le champ caché
+    document.getElementById('promo-id').value = promoId;
+    document.getElementById('statut').value = statut;
+
+    // Ouvrir la modal
+            document.getElementById('confirm-modal').checked = true;
+            const confirmButton = document.getElementById('confirm-button');
+        console.log(statut);
+        
+         if (statut === "Actif") {
+    // Cas désactivation
+    confirmButton.classList.remove('bg-emerald-600', 'btn-success');
+    confirmButton.classList.add('bg-red-600', 'btn-error');
+    confirmButton.innerHTML = `<i class="ri-close-line mr-2"></i> Désactiver`;
+    confirmButton.disabled = false;
+  } else {
+    // Cas activation
+    confirmButton.classList.remove('bg-red-600', 'btn-error');
+    confirmButton.classList.add('bg-emerald-600', 'btn-success');
+    confirmButton.innerHTML = `<i class="ri-check-line mr-2"></i> Activer`;
+    confirmButton.disabled = false;
+  }
+   document.getElementById('confirm-button').addEventListener('click', function () {
+    const promoId = document.getElementById('promo-id').value;
+
+    // Exemple : rediriger vers une URL pour changer le statut
+    window.location.href = `?controller=promo&affiche=liste&action=${statut}&id_promo=${promoId}`;
+
+  });
+  }
+  
+ 
+</script>

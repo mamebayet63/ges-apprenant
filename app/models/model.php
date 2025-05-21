@@ -33,27 +33,46 @@ $guard = function(string $controller) {
 };
 
 
-// Fonction anonyme pour récupérer les promotions
-$getPromotions = function () {
-    global $connect; // accès à la fonction de connexion
-
-    // Connexion à la base de données
+$selectAll = function(string $table, string $orderBy = '', array $conditions = [], int $limit = 10, int $offset = 0) {
+    global $connect;
     $pdo = $connect();
 
-    // Récupérer toutes les promotions, triées par statut (Active en premier) et ID croissant
-    $query = $pdo->prepare("SELECT * FROM promotion ORDER BY statut ASC, id ASC");
-    $query->execute();
+    $sql = "SELECT * FROM $table";
 
-    return $query->fetchAll(PDO::FETCH_ASSOC);
+    // Ajouter les conditions si nécessaire
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(' AND ', array_map(fn($col) => "$col = :$col", array_keys($conditions)));
+    }
+
+    // Ajouter l'ordre de tri si fourni
+    if ($orderBy) {
+        $sql .= " ORDER BY $orderBy";
+    }
+
+    // Ajouter la pagination
+    $sql .= " LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+
+    // Bind des conditions
+    foreach ($conditions as $key => $value) {
+        $stmt->bindValue(":$key", $value);
+    }
+
+    // Bind de la pagination
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 };
 
-function calculateDuration($start_date, $end_date) {
-    $start = new DateTime($start_date);
-    $end = new DateTime($end_date);
-    $interval = $start->diff($end);
-    
-    return $interval->format('%a jours'); // Retourne le nombre de jours
-}
+
+
+
+
+
 
 
 ?>

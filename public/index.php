@@ -8,6 +8,7 @@ require_once ROOT_PATH . '../app/models/model.php';
 // require_once ROOT_PATH . '/config/helpers.php';
 // require_once ROOT_PATH . '/config/dbHelpers.php';
 require_once ROOT_PATH . '../app/routes/route.web.php';
+require_once ROOT_PATH . '../app/controllers/controller.php';
 
 $guard($controller);
 

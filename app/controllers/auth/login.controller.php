@@ -85,4 +85,4 @@ switch ($page) {
 }
 
 $content = ob_get_clean();
-require_once(ROOT_PATH . "/app/views/layout/layoutSecurity.php");
+require_once(ROOT_PATH . "/app/views/layout/security.layout.php");

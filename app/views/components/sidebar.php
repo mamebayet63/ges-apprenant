@@ -34,31 +34,20 @@
     
                 <div class="pt-4 border-t border-gray-200/50">
                     <h3 class="text-xs font-semibold text-gray-400 uppercase mb-2 tracking-wider">GOALS-24</h3>
-                    <a href="./classes.html" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
-                        <div class="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
+                    <a href="<?= WEBROOT?>?controller=promo" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
+                        <div class="w-6 h-6 bg-red-600 text-white  rounded-lg flex items-center justify-center">
+                            <i class="ri-team-line"></i>
                         </div>
-                        <span class="text-gray-600">Classes</span>
+                        <span class="text-gray-600">Promotion</span>
                     </a>
                    
-                    <a href="./prof.html" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
-                        <div class="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
+                    <a href="<?= WEBROOT?>?controller=referentiel" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
+                        <div class="w-6 h-6 bg-purple-500 text-white rounded-lg flex items-center justify-center">
+                            <i class="ri-links-line"></i>
                         </div>
-                        <span class="text-gray-600">Professeur</span>
+                        <span class="text-gray-600">Référentiel</span>
                     </a>
-                    <a href="./cours.html" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
-                        <div class="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
-                        </div>
-                        <span class="text-gray-600">Cours</span>
-                    </a>
+                    
                 </div>
             </nav>
         </div>

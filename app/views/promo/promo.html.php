@@ -1,4 +1,6 @@
-       <?php if (!empty($_SESSION['success_message'])): ?>
+<?php require_once ROOT_PATH . "/app/views/components/stats.php"; ?>
+
+     <?php if (!empty($_SESSION['success_message'])): ?>
     <div id="success-alert" class="fixed top-4 right-4 bg-emerald-500 text-white px-6 py-3 rounded shadow-lg z-50">
         <?= htmlspecialchars($_SESSION['success_message']) ?>
     </div>
@@ -57,25 +59,25 @@
                                 <div class="h-32 w-full rounded-t-xl overflow-hidden">
                                     <?php if (!empty($p['cover_photo'])): 
 
-    // Si c'est une ressource (stream), on lit son contenu en chaîne
-    if (is_resource($p['cover_photo'])) {
-        $data = stream_get_contents($p['cover_photo']);
-    } else {
-        $data = $p['cover_photo'];
-    }
+                                        // Si c'est une ressource (stream), on lit son contenu en chaîne
+                                        if (is_resource($p['cover_photo'])) {
+                                            $data = stream_get_contents($p['cover_photo']);
+                                        } else {
+                                            $data = $p['cover_photo'];
+                                        }
 
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $type = finfo_buffer($finfo, $data);
-    finfo_close($finfo);
-?>
-    <img src="data:<?= $type ?>;base64,<?= base64_encode($data) ?>" 
-         alt="<?= htmlspecialchars($p['nom']) ?>" 
-         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-<?php else: ?>
-    <div class="w-full h-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">
-        <i class="ri-team-line text-3xl text-red-200"></i>
-    </div>
-<?php endif; ?>
+                                        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                                        $type = finfo_buffer($finfo, $data);
+                                        finfo_close($finfo);
+                                    ?>
+                                          <img src="data:<?= $type ?>;base64,<?= base64_encode($data) ?>" 
+                                              alt="<?= htmlspecialchars($p['nom']) ?>" 
+                                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                      <?php else: ?>
+                                          <div class="w-full h-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">
+                                              <i class="ri-team-line text-3xl text-red-200"></i>
+                                          </div>
+                                      <?php endif; ?>
 
                                 </div>
                                 
@@ -137,7 +139,7 @@
 
 
             </div>
-               <div class="flex justify-end">
+                <div class="flex justify-end">
                     <nav class="pagination mt-4 flex gap-x-2">
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <a 

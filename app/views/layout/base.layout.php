@@ -30,7 +30,6 @@
         <div class="flex-1 ml-72 px- space-y-8">
             <?php require_once ROOT_PATH . "/app/views/components/header.php"; ?>
             <section class="px-6 py-24 space-y-8">
-                <?php require_once ROOT_PATH . "/app/views/components/stats.php"; ?>
                 <?= $content ?>
             </section>
         </div>

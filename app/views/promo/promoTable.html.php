@@ -1,4 +1,5 @@
-       <?php if (!empty($_SESSION['success_message'])): ?>
+<?php require_once ROOT_PATH . "/app/views/components/stats.php"; ?>
+<?php if (!empty($_SESSION['success_message'])): ?>
     <div id="success-alert" class="fixed top-4 right-4 bg-emerald-500 text-white px-6 py-3 rounded shadow-lg z-50">
         <?= htmlspecialchars($_SESSION['success_message']) ?>
     </div>

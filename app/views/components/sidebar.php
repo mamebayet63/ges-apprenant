@@ -1,4 +1,4 @@
-<div id="sidebar" class="fixed h-screen w-72 bg-gradient-to-b from-gray-50 to-red-100 shadow-xl flex flex-col border-r border-gray-100 transition-transform duration-300 ease-in-out transform">
+<div id="sidebar" class="fixed h-screen w-56 bg-gradient-to-b from-gray-50 to-red-100 shadow-xl flex flex-col border-r border-gray-100 transition-transform duration-300 ease-in-out transform">
     
     <!-- Reste du contenu (profil, recherche, menu, etc.) -->
     <div class="p-6 border-b border-gray-200">
@@ -9,12 +9,12 @@
             </div>
             <h2 class="font-semibold text-gray-800 text-base">Ecole-221</h2>
         </div>
-        <div class="flex items-center space-x-2 bg-white rounded-lg p-3 shadow-sm ring-1 ring-gray-200/50 hover:ring-blue-300 transition-all">
+        <!-- <div class="flex items-center space-x-2 bg-white rounded-lg p-3 shadow-sm ring-1 ring-gray-200/50 hover:ring-blue-300 transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input type="text" placeholder="Search..." class="bg-transparent outline-none w-full placeholder-gray-400">
-        </div>
+        </div> -->
     </div>
 
     <!-- Ajoutez ici le reste du menu comme dans votre code -->
@@ -26,7 +26,7 @@
                         <svg class="w-6 h-6 text-gray-500 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
-                        <span class="text-gray-600 group-hover:text-blue-500 transition-colors">Dashboard</span>
+                        <span class="text-gray-500 text-sm font-medium group-hover:text-blue-500 transition-colors">Dashboard</span>
                     </a>
                     <!-- Répétez le même pattern pour les autres éléments avec des icônes différentes -->
                     
@@ -38,14 +38,14 @@
                         <div class="w-6 h-6 bg-red-600 text-white  rounded-lg flex items-center justify-center">
                             <i class="ri-team-line"></i>
                         </div>
-                        <span class="text-gray-600">Promotion</span>
+                        <span class="text-gray-500 text-sm font-medium">Promotion</span>
                     </a>
                    
                     <a href="<?= WEBROOT?>?controller=referentiel" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
                         <div class="w-6 h-6 bg-purple-500 text-white rounded-lg flex items-center justify-center">
                             <i class="ri-links-line"></i>
                         </div>
-                        <span class="text-gray-600">Référentiel</span>
+                        <span class="text-gray-500 text-sm font-medium">Référentiel</span>
                     </a>
                     
                 </div>
@@ -59,7 +59,7 @@
                 <svg class="w-6 h-6 text-gray-500 group-hover:text-yellow-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
                 </svg>
-                <span class="text-gray-600">Archive</span>
+                <span class="text-gray-500 text-sm font-medium"">Archive</span>
             </a>
             <a href="#" class="flex items-center space-x-3 p-3 hover:bg-red-50 rounded-xl transition-all hover:shadow-sm group">
                 <div class="w-6 h-6 bg-red-500 rounded-lg flex items-center justify-center">
@@ -67,7 +67,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                 </div>
-                <span class="text-red-600">Critical</span>
+                <span class="text-red-600 text-sm font-medium"">Critical</span>
             </a>
         </div>
   </div>

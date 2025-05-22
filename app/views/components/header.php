@@ -1,5 +1,5 @@
     <header class="fixed w-full top-0 bg-white/80 backdrop-blur-sm border-b border-gray-100 z-20">
-            <div class="flex items-center justify-between px-80 py-4">
+            <div class="flex items-center justify-between px-64 py-4 ">
                 <!-- Partie gauche -->
                 <div class="flex items-center space-x-4">
                     <!-- Menu toggle pour mobile -->
@@ -16,7 +16,7 @@
                 </div>
         
                 <!-- Partie droite -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4 ">
                     <!-- Recherche -->
                     <div class="relative hidden lg:block">
                         <input type="text" 
@@ -26,7 +26,7 @@
                     </div>
         
                     <!-- Actions rapides -->
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 ">
                         <!-- Calendrier -->
                         <button class="p-2 hover:bg-gray-100 rounded-xl relative">
                             <i class="ri-calendar-line"></i>
@@ -45,7 +45,7 @@
                         </button>
         
                         <!-- Profil -->
-                        <div class="relative group flex items-center space-x-2">
+                        <div class="relative group flex items-center space-x-2 ">
                             <div class="relative">
                                 <img src="https://img.freepik.com/free-photo/confident-business-woman-portrait-smiling-face_53876-137693.jpg?uid=R128466424&ga=GA1.1.810359603.1727369869&semt=ais_hybrid&w=740" 
                                      class="w-10 h-10 rounded-xl object-cover border-2 border-red-100">

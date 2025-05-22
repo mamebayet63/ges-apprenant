@@ -1,4 +1,4 @@
-    <section class="container mx-auto px-2">
+    <section class="container mx-auto">
        
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div class="flex items-center">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="flex items-center gap-3 ">
                     <!-- You can open the modal using ID.showModal() method -->
-                <button class="btn px-4  text-red-600 rounded-xl border border-red-500 hover:text-white  hover:bg-red-700 transition-all" onclick="my_modal_4.showModal()">Ajouter promotion</button>
+                <button class="btn px-4  text-red-600 rounded-xl border border-red-500 hover:text-white  hover:bg-red-700 transition-all" onclick="my_modal_4.showModal()">Ajouter referentiel</button>
                 <dialog id="my_modal_4" class="modal <?= !empty($errors) ? 'modal-open' : '' ?>">
                   <div class="modal-box w-11/12 md:w-8/12 max-w-3xl p-8 rounded-xl shadow-xl">
                     <!-- En-tête avec icône -->
@@ -27,24 +27,24 @@
                         <label class="label pl-0">
                           <span classlabel-text font-semibold text-gray-700">Libelle du referentiel</span>
                         </label>
-                        <input type="text" placeholder="Ex: Promotion 2024 - Dev Web" name="nom"
-                                value="<?= isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : (isset($promo['nom']) ? htmlspecialchars($promo['nom']) : '') ?>"
+                        <input type="text" placeholder="Ex: Promotion 2024 - Dev Web" name="libelle"
+                                value="<?= isset($_POST['libelle']) ? htmlspecialchars($_POST['libelle']) : (isset($promo['libelle']) ? htmlspecialchars($promo['libelle']) : '') ?>"
                               class="input input-bordered w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
                                 />
-                          <?php if (isset($errors['nom'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['nom'] ?> </p>
+                          <?php if (isset($errors['libelle'])): ?>
+                              <p class="text-red-600 text-sm"> <?= $errors['libelle'] ?> </p>
                         <?php endif; ?>
                       </div>
                       <div class="form-control">
                         <label class="label pl-0">
                           <span classlabel-text font-semibold text-gray-700">Capacité</span>
                         </label>
-                        <input type="text" placeholder="Ex: 3O" name="nb_apprenants"
-                                value="<?= isset($_POST['nb_apprenants']) ? htmlspecialchars($_POST['nb_apprenants']) : (isset($promo['nb_apprenants']) ? htmlspecialchars($promo['nb_apprenants']) : '') ?>"
+                        <input type="text" placeholder="Ex: 3O" name="capacite"
+                                value="<?= isset($_POST['capacite']) ? htmlspecialchars($_POST['capacite']) : (isset($promo['capacite']) ? htmlspecialchars($promo['capacite']) : '') ?>"
                               class="input input-bordered w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
                                 />
-                          <?php if (isset($errors['nb_apprenants'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['nb_apprenants'] ?> </p>
+                          <?php if (isset($errors['capacite'])): ?>
+                              <p class="text-red-600 text-sm"> <?= $errors['capacite'] ?> </p>
                         <?php endif; ?>
                       </div>
                       </div>
@@ -52,29 +52,38 @@
                    
                       
                       <!-- Photo de la promo -->
-                      <div class="form-control">
-                        <label class="label pl-0">
-                          <span class="label-text font-semibold text-gray-700">Photo du referentiel</span>
-                        </label>
-                        <div class="flex items-center justify-center w-full">
-                          <label class="flex flex-col w-full border-2 border-dashed hover:border-red-200 transition-colors rounded-lg p-8 text-center cursor-pointer">
-                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            <span class="text-gray-600">Glissez-déposez ou cliquez pour uploader</span>
-                            <input type="file" class="hidden" name="cover_photo" accept="image/*"
-                                  value="<?= isset($_POST['cover_photo']) ? htmlspecialchars($_POST['cover_photo']) : (isset($promo['cover_photo']) ? htmlspecialchars($promo['cover_photo']) : '') ?>"
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label pl-0">
+                            <span class="label-text font-semibold text-gray-700">Photo du referentiel</span>
+                            </label>
+                            <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col w-full border-2 border-dashed hover:border-red-200 transition-colors rounded-lg p-8 text-center cursor-pointer">
+                                <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="text-gray-600">Glissez-déposez ou cliquez pour uploader</span>
+                                <input type="file" class="hidden" name="photo" accept="image/*"
+                                    value="<?= isset($_POST['photo']) ? htmlspecialchars($_POST['photo']) : (isset($promo['photo']) ? htmlspecialchars($promo['photo']) : '') ?>"
 
-                            />
-                            <span class="text-sm text-gray-500 mt-2">JPG, PNG ou GIF (max 2MB)</span>
-                          </label>
+                                />
+                                <span class="text-sm text-gray-500 mt-2">JPG, PNG ou GIF (max 2MB)</span>
+                            </label>
+                            </div>
+                            <?php if (isset($errors['photo'])): ?>
+                                <p class="text-red-600 text-sm"> <?= $errors['photo'] ?> </p>
+                            <?php endif; ?>
+                        </div> 
+                        <div class="form-control">
+                             <label class="label pl-0">
+                                <span classlabel-text font-semibold text-gray-700">Description</span>
+                            </label>
+                            <input type="text" placeholder="" name="capacite"
+                                value="<?= isset($_POST['capacite']) ? htmlspecialchars($_POST['capacite']) : (isset($promo['capacite']) ? htmlspecialchars($promo['capacite']) : '') ?>"
+                              class="input input-bordered h-full w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
+                                />
                         </div>
-                        <?php if (isset($errors['cover_photo'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['cover_photo'] ?> </p>
-                        <?php endif; ?>
-                      </div>
-                      
-                     
+                    </div>
                       
                       <!-- Actions -->
                       <div class="modal-action mt-8">
@@ -110,27 +119,7 @@
                         <i class="ri-search-2-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         </div>
                     
-                        <!-- View Toggles -->
-                        <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
-                        <a href="<?= WEBROOT?>?controller=promo">
-                                <button 
-                                id="cardViewBtn" 
-                                class="p-2 rounded-lg bg-white text-red-600 transition-colors duration-200  "
-                                aria-label="Vue grille"
-                            >
-                                <i class="ri-grid-fill text-xl "></i>
-                            </button>
-                        </a>
-                        <a href="<?= WEBROOT?>?controller=promo&affiche=liste">
-                                <button 
-                                id="tableViewBtn" 
-                                class="p-2 rounded-lg hover:bg-white hover:text-red-600  transition-colors duration-200  "
-                                aria-label="Vue liste"
-                            >
-                                <i class="ri-list-check text-xl "></i>
-                            </button>
-                        </a>
-                        </div>
+                      
                     </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 bg-white">
                     <?php foreach ($referentiel as $r) : ?>
@@ -162,7 +151,7 @@
                             </div>
                             <div class="p-6">
                                 <div class="flex items-baseline justify-between mb-3">
-                                    <h3 class="text-sm font-bold text-red-900"><?= htmlspecialchars($r['libelle']) ?></h3>
+                                    <h3 class="text-sm font-bold text-red-700"><?= htmlspecialchars($r['libelle']) ?></h3>
                                     <span class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">Nouveau</span>
                                 </div>
                                 <p class="text-gray-600 mb-4 text-sm leading-relaxed text-xs font-medium">

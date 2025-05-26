@@ -1,4 +1,20 @@
-    <section class="container mx-auto">
+
+<?php if (!empty($_SESSION['success_message'])): ?>
+    <div id="success-alert" class="fixed top-4 right-4 bg-emerald-500 text-white px-6 py-3 rounded shadow-lg z-50">
+        <?= htmlspecialchars($_SESSION['success_message']) ?>
+    </div>
+    <script>
+      // Cacher le message après 5 secondes
+      setTimeout(() => {
+        const alert = document.getElementById('success-alert');
+        if (alert) {
+          alert.style.display = 'none';
+        }
+      }, 5000);
+    </script>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+ <section class="container mx-auto">
        
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div class="flex items-center">
@@ -75,14 +91,19 @@
                             <?php endif; ?>
                         </div> 
                         <div class="form-control">
-                             <label class="label pl-0">
-                                <span classlabel-text font-semibold text-gray-700">Description</span>
+                            <label class="label pl-0">
+                                <span class="label-text font-semibold text-gray-700">Description</span>
                             </label>
-                            <input type="text" placeholder="" name="capacite"
-                                value="<?= isset($_POST['capacite']) ? htmlspecialchars($_POST['capacite']) : (isset($promo['capacite']) ? htmlspecialchars($promo['capacite']) : '') ?>"
-                              class="input input-bordered h-full w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
-                                />
+                            <textarea 
+                                name="description"
+                                placeholder="Ajoutez une description détaillée..."
+                                class="textarea   mt-4 textarea-bordered w-full min-h-[120px] focus:ring-2 focus:ring-red-500 focus:border-red-500"><?= isset($_POST['description']) ? htmlspecialchars($_POST['description']) : (isset($promo['description']) ? htmlspecialchars($promo['description']) : '') ?></textarea>
+                            
+                            <?php if (isset($errors['description'])): ?>
+                                <p class="text-red-600 text-sm"><?= $errors['description'] ?></p>
+                            <?php endif; ?>
                         </div>
+
                     </div>
                       
                       <!-- Actions -->
@@ -125,22 +146,23 @@
                     <?php foreach ($referentiel as $r) : ?>
                         <!-- Carte 1 -->
                         <div class="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div class="h-48 overflow-hidden rounded-t-2xl relative">
-                                <?php if (!empty($p['cover_photo'])): 
+                            <div class="h-32 overflow-hidden rounded-t-2xl relative">
+                                <?php if (!empty($r['photo'])): 
 
                                         // Si c'est une ressource (stream), on lit son contenu en chaîne
-                                        if (is_resource($p['cover_photo'])) {
-                                            $data = stream_get_contents($p['cover_photo']);
+                                        if (is_resource($r['photo'])) {
+                                            $data = stream_get_contents($r['photo']);
                                         } else {
-                                            $data = $p['cover_photo'];
+                                            $data = $r['photo'];
                                         }
+                                        // dd($data);
 
                                         $finfo = finfo_open(FILEINFO_MIME_TYPE);
                                         $type = finfo_buffer($finfo, $data);
                                         finfo_close($finfo);
                                     ?>
                                           <img src="data:<?= $type ?>;base64,<?= base64_encode($data) ?>" 
-                                              alt="<?= htmlspecialchars($p['nom']) ?>" 
+                                              alt="<?= htmlspecialchars($r['libelle']) ?>" 
                                               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                       <?php else: ?>
                                           <div class="w-full h-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">

@@ -18,7 +18,7 @@ $insertElement = function ($table, $data) use ($connect) {
         $stmt = $pdo->prepare($query);
 
         foreach ($data as $key => $value) {
-            if ($key === 'cover_photo') {
+            if ($key === 'cover_photo' || $key === 'photo') {
                 // on force PDO à traiter l'image comme donnée binaire
                 $stmt->bindValue(":$key", $value, PDO::PARAM_LOB);
             } else {

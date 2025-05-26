@@ -155,7 +155,22 @@
                         <?php endfor; ?>
                     </nav>
                 </div>
-        <?php endif; ?>
+         <?php else: ?>
+                <!-- État vide amélioré -->
+                <div class="flex flex-col items-center justify-center w-full mt-12 gap-8">
+                    <div class="relative w-64 h-64">
+                        <img src="assets/images/9214833-removebg-preview.png" alt="Aucun étudiant" 
+                            class="w-full h-full object-contain opacity-50">
+                        <!-- <div class="absolute inset-0 bg-gradient-to-t from-red-100 to-transparent"></div> -->
+                    </div>
+                    <div class="text-center space-y-2">
+                        <p class="text-xl font-semibold text-gray-500">Aucune promotion trouvé</p>
+                        <p class="text-sm text-gray-500 max-w-md">
+                            Aucune résultat pour votre recherche. Vérifiez le libelle ou essayez un autre terme.
+                        </p>
+                    </div>
+                </div>
+            <?php endif; ?>
    
 <!-- Modal de confirmation -->
 <input type="checkbox" id="confirm-modal" class="modal-toggle" />

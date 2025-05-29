@@ -4,6 +4,7 @@ $controllers = [
     "security" => "auth/login.controller.php",// Contrôleur pour la connexion/déconnexion
     "promo"   => "promo/promo.controller.php",
     "referentiel"  => "referentiel/referentiel.controller.php",
+    "apprenant"  => "apprenant/apprenant.controller.php",
 ];
 // 🔁 On récupère le contrôleur d'abord
 $controller = $_GET["controller"] ?? "security";

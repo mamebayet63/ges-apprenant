@@ -69,7 +69,7 @@
                         <!-- Photo -->
                         <td class="px-2 py-2 bg-white">
                             <div class="w-12 h-12 rounded-md overflow-hidden">
-                    <?php afficherPhoto($p['cover_photo'], $p['nom']); ?>
+                                <?php afficherPhoto($p['cover_photo'], $p['nom']); ?>
                             </div>
                         </td>
 

@@ -68,6 +68,58 @@ $selectAll = function(string $table, string $orderBy = '', array $conditions = [
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 };
 
+$selectAllWithJoin = function(
+    string $baseTable,
+    array $joins = [],
+    string $orderBy = '',
+    array $conditions = [],
+    int $limit = 10,
+    int $offset = 0,
+    string $columns = '*'
+) use ($connect) {
+    $pdo = $connect();
+
+    // Départ : les colonnes à récupérer
+    $sql = "SELECT $columns FROM $baseTable";
+
+    // Ajouter les jointures
+    foreach ($joins as $join) {
+        $type = strtoupper($join['type'] ?? 'JOIN');
+        $table = $join['table'] ?? '';
+        $on = $join['on'] ?? '';
+        if ($table && $on) {
+            $sql .= " $type $table ON $on";
+        }
+    }
+
+    // Ajouter les conditions si présentes
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(' AND ', array_map(fn($col) => "$col = :$col", array_keys($conditions)));
+    }
+
+    // Ajouter l'ordre de tri
+    if ($orderBy) {
+        $sql .= " ORDER BY $orderBy";
+    }
+
+    // Ajouter la pagination
+    $sql .= " LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+
+    // Bind des conditions
+    foreach ($conditions as $key => $value) {
+        $stmt->bindValue(":$key", $value);
+    }
+
+    // Bind pagination
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+};
 
 
 

@@ -6,7 +6,11 @@
                 <h1 class="text-3xl font-bold text-red-600">Liste des Apprenants</h1>
                 <p class="text-gray-600 mt-2">Gérez et suivez les apprenants de votre organisation</p>
             </div>
-            <div class="flex items-center gap-3">
+            
+        </div>
+        <div class="flex items-center gap-3 justify-end mb-5">
+                <a href="<?= WEBROOT?>?controller=apprenant&page=telecharger&format=pdf" class="btn bg-red-600 text-white hover:bg-red-700">📄 Télécharger PDF</a>
+                <a href="<?= WEBROOT?>?controller=apprenant&page=telecharger&format=excel" class="btn bg-green-600 text-white hover:bg-green-700">📊 Télécharger Excel</a>
                 <button class="btn px-4  text-red-600 rounded-xl border border-red-500 hover:text-white  hover:bg-red-700 transition-all" onclick="my_modal_4.showModal()">Ajouter Apprenant</button>
                 <dialog id="my_modal_4" class="modal <?= !empty($errors) ? 'modal-open' : '' ?>">
                   <div class="modal-box w-11/12 md:w-8/12 max-w-3xl p-8 rounded-xl shadow-xl">
@@ -15,120 +19,226 @@
                       <svg class="w-8 h-8 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                       </svg>
-                      <h3 class="text-2xl font-bold text-red-600">Ajouter une nouvelle promotion</h3>
+                      <h3 class="text-2xl font-bold text-red-600">Ajouter un nouvel apprenant</h3>
                     </div>
 
                     <form method="POST" enctype="multipart/form-data" class="space-y-6">
-                      <!-- Nom de la promo -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div class="form-control">
-                        <label class="label pl-0">
-                          <span classlabel-text font-semibold text-gray-700">Nom de la promotion</span>
-                        </label>
-                        <input type="text" placeholder="Ex: Promotion 2024 - Dev Web" name="nom"
-                                value="<?= isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : (isset($promo['nom']) ? htmlspecialchars($promo['nom']) : '') ?>"
-                              class="input input-bordered w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
-                                />
-                          <?php if (isset($errors['nom'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['nom'] ?> </p>
-                        <?php endif; ?>
-                      </div>
-                      <div class="form-control">
-                        <label class="label pl-0">
-                          <span classlabel-text font-semibold text-gray-700">Nombre d'apprenants</span>
-                        </label>
-                        <input type="text" placeholder="Ex: 3O" name="nb_apprenants"
-                                value="<?= isset($_POST['nb_apprenants']) ? htmlspecialchars($_POST['nb_apprenants']) : (isset($promo['nb_apprenants']) ? htmlspecialchars($promo['nb_apprenants']) : '') ?>"
-                              class="input input-bordered w-full focus:ring-2 focus:ring-red-500 focus:border-red-500" 
-                                />
-                          <?php if (isset($errors['nb_apprenants'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['nb_apprenants'] ?> </p>
-                        <?php endif; ?>
-                      </div>
-                      </div>
-                      
-                      <!-- Dates -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="form-control">
-                          <label class="label pl-0">
-                            <span class="label-text font-semibold text-gray-700">Date de début</span>
-                          </label>
-                          <div class="relative">
-                            <input type="date" name="date_debut"
-                                  class="input input-bordered w-full calendar-icon pr-10"
-                                    value="<?= isset($_POST['date_debut']) ? htmlspecialchars($_POST['date_debut']) : (isset($promo['date_debut']) ? htmlspecialchars($promo['date_debut']) : '') ?>"
-                                    />
-                            <svg class="w-5 h-5 text-gray-400 absolute right-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                          </div>
-                          <?php if (isset($errors['date_debut'])): ?>
-                                            <p class="text-red-600 text-sm"> <?= $errors['date_debut'] ?> </p>
-                        <?php endif; ?>
-                        </div>
-
-                        <div class="form-control">
-                          <label class="label pl-0">
-                            <span class="label-text font-semibold text-gray-700">Date de fin</span>
-                          </label>
-                          <div class="relative">
-                            <input type="date" name="date_fin"
-                                  class="input input-bordered w-full calendar-icon pr-10"
-                                    value="<?= isset($_POST['date_fin']) ? htmlspecialchars($_POST['date_fin']) : (isset($promo['date_fin']) ? htmlspecialchars($promo['date_fin']) : '') ?>"
-                                    />
-                            <svg class="w-5 h-5 text-gray-400 absolute right-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                          </div>
-                          <?php if (isset($errors['date_fin'])): ?>
-                                            <p class="text-red-600 text-sm"> <?= $errors['date_fin'] ?> </p>
-                        <?php endif; ?>
-                        </div>
+                      <!-- Informations de l'apprenant -->
+                      <div class="space-y-6">
+                        <h4 class="text-lg font-semibold text-gray-700">Informations personnelles</h4>
                         
-                      </div>
-                      
-                      <!-- Photo de la promo -->
-                      <div class="form-control">
-                        <label class="label pl-0">
-                          <span class="label-text font-semibold text-gray-700">Photo de la promotion</span>
-                        </label>
-                        <div class="flex items-center justify-center w-full">
-                          <label class="flex flex-col w-full border-2 border-dashed hover:border-red-200 transition-colors rounded-lg p-8 text-center cursor-pointer">
-                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            <span class="text-gray-600">Glissez-déposez ou cliquez pour uploader</span>
-                            <input type="file" class="hidden" name="cover_photo" accept="image/*"
-                                  value="<?= isset($_POST['cover_photo']) ? htmlspecialchars($_POST['cover_photo']) : (isset($promo['cover_photo']) ? htmlspecialchars($promo['cover_photo']) : '') ?>"
-
-                            />
-                            <span class="text-sm text-gray-500 mt-2">JPG, PNG ou GIF (max 2MB)</span>
-                          </label>
-                        </div>
-                        <?php if (isset($errors['cover_photo'])): ?>
-                              <p class="text-red-600 text-sm"> <?= $errors['cover_photo'] ?> </p>
-                        <?php endif; ?>
-                      </div>
-                      
-                      <!-- Référentiels -->
-                      <div class="form-control">
-                        <label class="label pl-0">
-                          <span class="label-text font-semibold text-gray-700">Référentiels associés</span>
-                        </label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                          <?php foreach ($referentiels as $ref): ?>
-                            <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-red-50 transition-colors cursor-pointer">
-                            <input type="checkbox" name="referentiels[]" value="<?= htmlspecialchars($ref['id']) ?>"
-                                <?= (in_array($ref['id'], $old['referentiels'] ?? [])) ? 'checked' : '' ?> />
-                              <span class="text-gray-700"><?= htmlspecialchars($ref['libelle']) ?></span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <!-- Nom -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Nom</span>
                             </label>
-                          <?php endforeach; ?>
+                            <input type="text" name="nom" placeholder="Dupont"
+                              value="<?= isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : '' ?>"
+                              class="input input-bordered w-full focus:ring-2 focus:ring-red-500"/>
+                            <?php if (isset($errors['nom'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['nom'] ?></p>
+                            <?php endif; ?>
+                          </div>
+
+                          <!-- Prénom -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Prénom</span>
+                            </label>
+                            <input type="text" name="prenom" placeholder="Jean"
+                              value="<?= isset($_POST['prenom']) ? htmlspecialchars($_POST['prenom']) : '' ?>"
+                              class="input input-bordered w-full focus:ring-2 focus:ring-red-500"/>
+                            <?php if (isset($errors['prenom'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['prenom'] ?></p>
+                            <?php endif; ?>
+                          </div>
                         </div>
-                        <?php if (isset($errors['referentiels'])): ?>
-                                            <p class="text-red-600 text-sm"> <?= $errors['referentiels'] ?> </p>
-                        <?php endif; ?>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <!-- Date de naissance -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Date de naissance</span>
+                            </label>
+                            <input type="date" name="date_naissance"
+                              value="<?= isset($_POST['date_naissance']) ? htmlspecialchars($_POST['date_naissance']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['date_naissance'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['date_naissance'] ?></p>
+                            <?php endif; ?>
+                          </div>
+
+                          <!-- Lieu de naissance -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Lieu de naissance</span>
+                            </label>
+                            <input type="text" name="lieu_naissance" placeholder="Paris"
+                              value="<?= isset($_POST['lieu_naissance']) ? htmlspecialchars($_POST['lieu_naissance']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['lieu_naissance'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['lieu_naissance'] ?></p>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Adresse -->
+                            <div class="form-control">
+                              <label class="label pl-0">
+                                <span class="label-text font-semibold text-gray-700">Adresse</span>
+                              </label>
+                              <input type="text" name="adresse" placeholder="123 Rue de la République"
+                                value="<?= isset($_POST['adresse']) ? htmlspecialchars($_POST['adresse']) : '' ?>"
+                                class="input input-bordered w-full"/>
+                              <?php if (isset($errors['adresse'])): ?>
+                                <p class="text-red-600 text-sm"><?= $errors['adresse'] ?></p>
+                              <?php endif; ?>
+                            </div>
+                            <!-- Sélection du référentiel -->
+                            <div class="form-control">
+                              <label class="label pl-0">
+                                <span class="label-text font-semibold text-gray-700">Référentiel</span>
+                              </label>
+                              <select name="id_referentiel" class="select select-bordered w-full">
+                                <option value="">-- Sélectionnez un référentiel --</option>
+                                <?php foreach ($referentiels as $ref): ?>
+                                  <option value="<?= $ref['id'] ?>"
+                                    <?= isset($_POST['id_referentiel']) && $_POST['id_referentiel'] == $ref['id'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($ref['libelle']) ?>
+                                  </option>
+                                <?php endforeach; ?>
+                              </select>
+                              <?php if (isset($errors['id_referentiel'])): ?>
+                                <p class="text-red-600 text-sm"><?= $errors['id_referentiel'] ?></p>
+                              <?php endif; ?>
+                            </div>
+
+                          </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <!-- Email -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Email</span>
+                            </label>
+                            <input type="email" name="email" placeholder="jean.dupont@example.com"
+                              value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['email'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['email'] ?></p>
+                            <?php endif; ?>
+                          </div>
+
+                          <!-- Téléphone -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Téléphone</span>
+                            </label>
+                            <input type="tel" name="telephone" placeholder="06 12 34 56 78"
+                              value="<?= isset($_POST['telephone']) ? htmlspecialchars($_POST['telephone']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['telephone'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['telephone'] ?></p>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+
+                        <!-- Photo -->
+                        <div class="form-control">
+                          <label class="label pl-0">
+                            <span class="label-text font-semibold text-gray-700">Photo de l'apprenant</span>
+                          </label>
+                          <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col w-full border-2 border-dashed hover:border-red-200 transition-colors rounded-lg p-8 text-center cursor-pointer">
+                              <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                              </svg>
+                              <input type="file" class="hidden" name="photo" accept="image/*"/>
+                              <span class="text-gray-600">Glissez-déposez ou cliquez pour uploader</span>
+                              <span class="text-sm text-gray-500 mt-2">JPG, PNG ou GIF (max 2MB)</span>
+                            </label>
+                          </div>
+                          <?php if (isset($errors['photo'])): ?>
+                            <p class="text-red-600 text-sm"><?= $errors['photo'] ?></p>
+                          <?php endif; ?>
+                        </div>
                       </div>
-                      
+
+                      <!-- Informations du tuteur -->
+                      <div class="space-y-6 pt-6">
+                        <h4 class="text-lg font-semibold text-gray-700">Informations du tuteur</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <!-- Tuteur Nom -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Nom du tuteur</span>
+                            </label>
+                            <input type="text" name="tuteur_nom" placeholder="Dupont"
+                              value="<?= isset($_POST['tuteur_nom']) ? htmlspecialchars($_POST['tuteur_nom']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['tuteur_nom'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['tuteur_nom'] ?></p>
+                            <?php endif; ?>
+                          </div>
+
+                          <!-- Tuteur Prénom -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Prénom du tuteur</span>
+                            </label>
+                            <input type="text" name="tuteur_prenom" placeholder="Marie"
+                              value="<?= isset($_POST['tuteur_prenom']) ? htmlspecialchars($_POST['tuteur_prenom']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['tuteur_prenom'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['tuteur_prenom'] ?></p>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <!-- Lien de parenté -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Lien de parenté</span>
+                            </label>
+                            <input type="text" name="tuteur_lien" placeholder="Père, Mère, Tuteur légal..."
+                              value="<?= isset($_POST['tuteur_lien']) ? htmlspecialchars($_POST['tuteur_lien']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['tuteur_lien'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['tuteur_lien'] ?></p>
+                            <?php endif; ?>
+                          </div>
+
+                          <!-- Téléphone -->
+                          <div class="form-control">
+                            <label class="label pl-0">
+                              <span class="label-text font-semibold text-gray-700">Téléphone du tuteur</span>
+                            </label>
+                            <input type="tel" name="tuteur_telephone" placeholder="06 12 34 56 78"
+                              value="<?= isset($_POST['tuteur_telephone']) ? htmlspecialchars($_POST['tuteur_telephone']) : '' ?>"
+                              class="input input-bordered w-full"/>
+                            <?php if (isset($errors['tuteur_telephone'])): ?>
+                              <p class="text-red-600 text-sm"><?= $errors['tuteur_telephone'] ?></p>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+
+                        <!-- Adresse du tuteur -->
+                        <div class="form-control">
+                          <label class="label pl-0">
+                            <span class="label-text font-semibold text-gray-700">Adresse du tuteur</span>
+                          </label>
+                          <input type="text" name="tuteur_adresse" placeholder="123 Rue de la République"
+                            value="<?= isset($_POST['tuteur_adresse']) ? htmlspecialchars($_POST['tuteur_adresse']) : '' ?>"
+                            class="input input-bordered w-full"/>
+                          <?php if (isset($errors['tuteur_adresse'])): ?>
+                            <p class="text-red-600 text-sm"><?= $errors['tuteur_adresse'] ?></p>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+
                       <!-- Actions -->
                       <div class="modal-action mt-8">
                         <button type="button" 
@@ -148,7 +258,6 @@
                   </form>
                 </dialog>
             </div>
-        </div>
        <?php if ($apprenant) : ?>
 
         <!-- Tableau -->
@@ -203,7 +312,7 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 text-xs text-gray-600 font-medium">
-                                    <i class="ri-more-2-fill"></i>
+                                    <a href="<?= WEBROOT?>?controller=apprenant&page=details"><i class="ri-more-2-fill"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

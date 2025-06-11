@@ -33,7 +33,7 @@ $guard = function(string $controller) {
 };
 
 
-$selectAll = function(string $table, string $orderBy = '', array $conditions = [], int $limit = 10, int $offset = 0) {
+$selectAll = function(string $table, string $orderBy = '', array $conditions = [], int $limit = 100, int $offset = 0) {
     global $connect;
     $pdo = $connect();
 
@@ -73,7 +73,7 @@ $selectAllWithJoin = function(
     array $joins = [],
     string $orderBy = '',
     array $conditions = [],
-    int $limit = 10,
+    int $limit = 0,
     int $offset = 0,
     string $columns = '*'
 ) use ($connect) {
@@ -102,8 +102,10 @@ $selectAllWithJoin = function(
         $sql .= " ORDER BY $orderBy";
     }
 
-    // Ajouter la pagination
-    $sql .= " LIMIT :limit OFFSET :offset";
+    // Ajouter la pagination uniquement si demandée
+    if ($limit > 0) {
+        $sql .= " LIMIT :limit OFFSET :offset";
+    }
 
     $stmt = $pdo->prepare($sql);
 
@@ -112,14 +114,17 @@ $selectAllWithJoin = function(
         $stmt->bindValue(":$key", $value);
     }
 
-    // Bind pagination
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    // Bind pagination uniquement si nécessaire
+    if ($limit > 0) {
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    }
 
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 };
+
 
 
 

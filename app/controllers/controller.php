@@ -174,3 +174,10 @@ $validateForm = function(array $data, array $rules): array {
     return $errors;
 };
 
+$genererMatricule = function() {
+    $annee = '2025'; // tu peux aussi utiliser date('Y') si tu veux que ce soit dynamique
+    $prefixe = 'APPR';
+    $numero = rand(1, 999);
+    $numeroFormate = str_pad($numero, 3, '0', STR_PAD_LEFT);
+    return "$prefixe-$annee-$numeroFormate";
+};

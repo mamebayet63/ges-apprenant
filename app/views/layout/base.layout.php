@@ -27,9 +27,9 @@
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
         <?php require_once ROOT_PATH . "/app/views/components/sidebar.php"; ?>
-        <div class="flex-1 ml-56 px- space-y-8">
+        <div class="flex-1 ml-56 ">
             <?php require_once ROOT_PATH . "/app/views/components/header.php"; ?>
-            <section class="px-4 py-24 space-y-8">
+            <section class="px-4 py-24 ">
                 <?= $content ?>
             </section>
         </div>

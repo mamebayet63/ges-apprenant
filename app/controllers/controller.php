@@ -12,14 +12,13 @@ $insertElement = function ($table, $data) use ($connect) {
 
     $columns = implode(", ", array_keys($data));
     $placeholders = ":" . implode(", :", array_keys($data));
-    $query = "INSERT INTO $table ($columns) VALUES ($placeholders) RETURNING id";
+    $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
 
     try {
         $stmt = $pdo->prepare($query);
 
         foreach ($data as $key => $value) {
             if ($key === 'cover_photo' || $key === 'photo') {
-                // on force PDO à traiter l'image comme donnée binaire
                 $stmt->bindValue(":$key", $value, PDO::PARAM_LOB);
             } else {
                 $stmt->bindValue(":$key", $value);
@@ -27,13 +26,52 @@ $insertElement = function ($table, $data) use ($connect) {
         }
 
         $stmt->execute();
-        return $stmt->fetchColumn(); // retourne l'ID inséré
+        return $pdo->lastInsertId(); // ✅ compatible MySQL
     } catch (PDOException $e) {
         error_log("Erreur SQL : " . $e->getMessage());
         echo "Erreur SQL : " . $e->getMessage();
         return false;
     }
 };
+$updateElement = function ($table, $data, $conditions) use ($connect) {
+    $pdo = $connect();
+
+    // Construction des paires colonne = :param
+    $setParts = [];
+    foreach ($data as $key => $value) {
+        $setParts[] = "$key = :$key";
+    }
+    $setClause = implode(", ", $setParts);
+
+    // Construction des conditions WHERE
+    $whereParts = [];
+    foreach ($conditions as $key => $value) {
+        $whereParts[] = "$key = :where_$key";
+    }
+    $whereClause = implode(" AND ", $whereParts);
+
+    $sql = "UPDATE $table SET $setClause WHERE $whereClause";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+
+        // Bind des nouvelles valeurs
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        // Bind des conditions
+        foreach ($conditions as $key => $value) {
+            $stmt->bindValue(":where_$key", $value);
+        }
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Erreur updateElement: " . $e->getMessage());
+        return false;
+    }
+};
+
 $countAll = function(string $table, array $conditions = []) {
     global $connect;
     $pdo = $connect();
@@ -180,4 +218,25 @@ $genererMatricule = function() {
     $numero = rand(1, 999);
     $numeroFormate = str_pad($numero, 3, '0', STR_PAD_LEFT);
     return "$prefixe-$annee-$numeroFormate";
+};
+
+$deleteElement = function ($table, $conditions) use ($connect) {
+    $pdo = $connect();
+
+    // Génère la clause WHERE
+    $where = implode(' AND ', array_map(fn($k) => "$k = :$k", array_keys($conditions)));
+
+    // Soft delete : on met à jour le champ `etat` au lieu de supprimer
+    $sql = "UPDATE $table SET etat = 'Inactif' WHERE $where";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        foreach ($conditions as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Erreur soft delete : " . $e->getMessage());
+        return false;
+    }
 };

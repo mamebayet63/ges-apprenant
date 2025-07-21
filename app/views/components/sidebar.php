@@ -34,13 +34,7 @@
     
                 <div class="pt-4 border-t border-gray-200/50">
                     <h3 class="text-xs font-semibold text-gray-400 uppercase mb-2 tracking-wider">GOALS-24</h3>
-                    <a href="<?= WEBROOT?>?controller=promo" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
-                        <div class="w-6 h-6 bg-red-600 text-white  rounded-lg flex items-center justify-center">
-                            <i class="ri-team-line"></i>
-                        </div>
-                        <span class="text-gray-500 text-sm font-medium">Promotion</span>
-                    </a>
-                   
+                    
                     <a href="<?= WEBROOT?>?controller=referentiel" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
                         <div class="w-6 h-6 bg-purple-500 text-white rounded-lg flex items-center justify-center">
                             <i class="ri-links-line"></i>
@@ -53,6 +47,13 @@
                         </div>
                         <span class="text-gray-500 text-sm font-medium">Apprenants</span>
                     </a>
+                    <a href="<?= WEBROOT?>?controller=matiere" class="flex items-center space-x-3 p-3 hover:bg-white rounded-xl transition-all hover:shadow-sm">
+                        <div class="w-6 h-6 bg-red-600 text-white  rounded-lg flex items-center justify-center">
+                            <i class="ri-team-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm font-medium">Matiére</span>
+                    </a>
+                   
                     
                 </div>
             </nav>

@@ -116,6 +116,8 @@ function handlePromoPage()
         // ✅ Insertion dans la table promotion
         // $insertElement('promotion', $newPromo);
         $promoId = $insertElement('promotion', $newPromo);
+        $promoId = (int) $promoId;
+
 
     if (!$promoId) {
         // Afficher l'erreur SQL
@@ -148,7 +150,7 @@ function handlePromoPage()
         // Récupérer à nouveau les promos et référentiels pour affichage
         $promos = $selectAll('promotion', 'id ASC', [], $limit, $offset);
         $referentiels = $selectAll('referentiel');
-        dd($pagination);
+        // dd($pagination);
 
         // Réaffichage du formulaire avec erreurs et données précédentes
         renderView(
@@ -180,34 +182,12 @@ function handlePromoPage()
 }
 
 
-function handleAjoutPage() {
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Récupération des données du formulaire
-        $formData = [
-            'nom' => $_POST['nom'] ?? '',
-            'date_debut' => $_POST['date_debut'] ?? '',
-            'date_fin' => $_POST['date_fin'] ?? '',
-            'statut' => $_POST['statut'] ?? '',
-            'nb_apprenants' => $_POST['nb_apprenants'] ?? '',
-
-        ];
-
-    }
-    renderView(
-        view: 'promo/ajoutPromo',
-        data: [],
-        layout: 'security'
-    );
-}
 
 switch ($page) {
     case 'promo':
         handlePromoPage();
         break;
-    case 'ajoutPromo':
-        handleAjoutPage();
-        break;
+   
     default:
         // Optionnel : page d'erreur ou redirection
         echo "Page inconnue.";

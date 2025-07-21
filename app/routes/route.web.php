@@ -5,6 +5,7 @@ $controllers = [
     "promo"   => "promo/promo.controller.php",
     "referentiel"  => "referentiel/referentiel.controller.php",
     "apprenant"  => "apprenant/apprenant.controller.php",
+    "matiere" => "matiere/matiere.controller.php",
 ];
 // 🔁 On récupère le contrôleur d'abord
 $controller = $_GET["controller"] ?? "security";

@@ -3,13 +3,13 @@
 
 $connect = function (): PDO {
     $host = 'localhost';
-    $port = '5432';
+    $port = '3306'; // Port MySQL par défaut
     $dbname = 'ges_apprenant';
-    $user = 'postgres'; // À adapter
-    $password = 's@uveur25'; // À adapter
+    $user = 'root'; // À adapter selon ton utilisateur MySQL
+    $password = ''; // À adapter selon ton mot de passe
 
     try {
-        $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+        $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
         return new PDO($dsn, $user, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
@@ -18,6 +18,7 @@ $connect = function (): PDO {
         die("Erreur de connexion : " . $e->getMessage());
     }
 };
+
 
 $guard = function(string $controller) {
     if (!isset($_SESSION['user']) && $controller !== 'security') {
@@ -37,19 +38,24 @@ $selectAll = function(string $table, string $orderBy = '', array $conditions = [
     global $connect;
     $pdo = $connect();
 
+    // Ajouter etat = 'Actif' par défaut, sauf si déjà spécifié
+    if (!array_key_exists('etat', $conditions)) {
+        $conditions['etat'] = 'Actif';
+    }
+
     $sql = "SELECT * FROM $table";
 
-    // Ajouter les conditions si nécessaire
+    // Ajouter les conditions
     if (!empty($conditions)) {
         $sql .= " WHERE " . implode(' AND ', array_map(fn($col) => "$col = :$col", array_keys($conditions)));
     }
 
-    // Ajouter l'ordre de tri si fourni
+    // Ajouter l'ordre
     if ($orderBy) {
         $sql .= " ORDER BY $orderBy";
     }
 
-    // Ajouter la pagination
+    // Pagination
     $sql .= " LIMIT :limit OFFSET :offset";
 
     $stmt = $pdo->prepare($sql);
@@ -66,6 +72,23 @@ $selectAll = function(string $table, string $orderBy = '', array $conditions = [
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+};
+
+$selectById = function(string $table, int $id) {
+    global $connect;
+    $pdo = $connect();
+
+    $sql = "SELECT * FROM $table WHERE id = :id LIMIT 1";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Une seule ligne
+    } catch (PDOException $e) {
+        error_log("Erreur selectById: " . $e->getMessage());
+        return null;
+    }
 };
 
 $selectAllWithJoin = function(
